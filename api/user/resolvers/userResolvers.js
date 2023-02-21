@@ -1,20 +1,13 @@
-const arrayUsers = [
-    {
-        nome: "Ana",
-        ativo: true ,
-        email: "ana@ana"
-    },
-    {
-        nome:"Marcia",
-        ativo: false
-    }
-]
-
 
 const userResolvers = {
     Query: {
-        users: () => arrayUsers,
-        firstUser : () => arrayUsers[0]
+        users: (root,args,{ dataSources }) => dataSources.usersAPI.getUsers(),
+        userById: (root,{id},{dataSources}) => dataSources.usersAPI.getUserById(id)
+    },
+    Mutation: {
+        createUser: (root, user, {dataSources}) => {
+            return dataSources.usersAPI.createUser(user)
+        }
     }
 }
 
